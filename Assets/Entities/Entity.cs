@@ -1,20 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Entity : MonoBehaviour
+using UnityEngine.AI;
+using UnityHFSM;
+public abstract class Entity : MonoBehaviour
 {
-    public int health;
-    public int lowHealthThreshold;
-    public int ammo;
-    public int lowAmmoThreshold;
-    public ObjectLookUp.ObjectID targetWhenHealthLow;
-    public ObjectLookUp.ObjectID targetWhenAmmoLow;
-    void Start()
+    protected NavMeshAgent agent;
+    protected StateMachine<State> entityStateMachine;
+    public State state;
+    protected virtual void Start()
     {
-        
+        agent = GetComponent<NavMeshAgent>();
+        entityStateMachine = new StateMachine<State>();
+
+        entityStateMachine.AddState(State.Null);
+
+        entityStateMachine.Init();
     }
-    void Update()
+    protected virtual void Update()
     {
+        entityStateMachine.OnLogic();
     }
+}
+public enum State
+{
+    Null,
+    RandomWalk,
+    FleeToSafeArea,
+    MoveToOtherEntity
 }
