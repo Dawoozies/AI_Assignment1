@@ -10,4 +10,12 @@ public class NavigationSystem : MonoBehaviour
     {
         navigators[activeNavigator].Navigate();
     }
+    public void ChangeActiveNavigator(int index)
+    {
+        activeNavigator = index;
+    }
+    public void ChangePoint(Vector3 p)
+    {
+        navigators[activeNavigator].SetPoint(p);
+    }
 }

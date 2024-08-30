@@ -17,17 +17,12 @@ public class ObjectLookUp : MonoBehaviour
         AmmoDepleted,
         HealthPackDepleted,
         BloodDepleted,
-        Healer,
-        HealerDead,
-        Vampire,
-        VampireDead,
-        Hunter,
-        HunterDead
     }
     public Dictionary<ObjectID, List<WorldObject>> Objects = new();
     public Dictionary<object, float> sqrDistLookUpTable = new Dictionary<object, float>();
-    public bool TryGetClosestObjectWithID(Vector3 point, ObjectID id)
+    public bool TryGetClosestObjectWithID(Vector3 point, ObjectID id, out WorldObject target)
     {
+        target = null;
         if (!Objects.ContainsKey(id))
             return false;
         if (Objects[id].Count == 0)
@@ -58,7 +53,7 @@ public class ObjectLookUp : MonoBehaviour
             }
             return sqrDstA.CompareTo(sqrDstB);
         });
-
+        target = Objects[id][0];
         return true;
     }
     public void AddObject(WorldObject worldObject)

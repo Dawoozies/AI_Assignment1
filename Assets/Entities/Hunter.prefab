@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 4768097166845999164}
   - component: {fileID: 2705376701368083765}
   - component: {fileID: 3163127774733469099}
-  - component: {fileID: 655065959453713132}
+  - component: {fileID: 6007264510772439969}
   - component: {fileID: 4517855024462381019}
   - component: {fileID: 4744431046322019114}
+  - component: {fileID: 3375746457656378919}
   m_Layer: 0
   m_Name: Hunter
   m_TagString: Untagged
@@ -131,7 +132,7 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 33
   m_ObstacleAvoidanceType: 4
---- !u!114 &655065959453713132
+--- !u!114 &6007264510772439969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,9 +141,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2751567753488051106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36e6a62ce7017e43bceaace5fd13d63, type: 3}
+  m_Script: {fileID: 11500000, guid: dda170d7dd9a34141900f2fd16952a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 6
+  collectableID: 1
 --- !u!114 &4517855024462381019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navigators:
   - {fileID: 4744431046322019114}
+  - {fileID: 3375746457656378919}
   activeNavigator: 0
 --- !u!114 &4744431046322019114
 MonoBehaviour:
@@ -174,3 +178,19 @@ MonoBehaviour:
   stepRadius: 25
   speedBounds: {x: 5, y: 10}
   waitTimeBounds: {x: 1, y: 2}
+--- !u!114 &3375746457656378919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2751567753488051106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01b4c3f7a385b54b8308b67e11b84a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  point: {x: 0, y: 0, z: 0}
+  closeDistance: 1
+  speed: 3

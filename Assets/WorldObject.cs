@@ -9,6 +9,12 @@ public class WorldObject : MonoBehaviour
     public ObjectLookUp.ObjectID usedID;
     public float regenTime;
     float _regenTime;
+    public MeshRenderer meshRenderer;
+    public Material canBeUsed, depleted;
+    private void Start()
+    {
+        ObjectLookUp.ins.AddObject(this);
+    }
     private void Update()
     {
         if (_regenTime < regenTime)

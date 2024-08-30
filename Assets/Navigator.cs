@@ -16,4 +16,7 @@ public class Navigator : MonoBehaviour
     public virtual void Update()
     {
     }
+    public virtual void SetPoint(Vector3 p)
+    {
+    }
 }

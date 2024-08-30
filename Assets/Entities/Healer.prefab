@@ -13,8 +13,10 @@ GameObject:
   - component: {fileID: 4093504385477908533}
   - component: {fileID: 3091218951698124568}
   - component: {fileID: 8216763257464183648}
+  - component: {fileID: 4289986543677026279}
   - component: {fileID: 7450431051457063082}
   - component: {fileID: 8763435729805825877}
+  - component: {fileID: 3285026632646385952}
   m_Layer: 0
   m_Name: Healer
   m_TagString: Untagged
@@ -130,6 +132,20 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 17
   m_ObstacleAvoidanceType: 4
+--- !u!114 &4289986543677026279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7570643994287249002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7fa5a40e6a9a14cb82c1f43237798d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 6
+  collectableID: 5
 --- !u!114 &7450431051457063082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navigators:
   - {fileID: 8763435729805825877}
+  - {fileID: 3285026632646385952}
   activeNavigator: 0
 --- !u!114 &8763435729805825877
 MonoBehaviour:
@@ -161,3 +178,19 @@ MonoBehaviour:
   stepRadius: 25
   speedBounds: {x: 5, y: 10}
   waitTimeBounds: {x: 1, y: 2}
+--- !u!114 &3285026632646385952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7570643994287249002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01b4c3f7a385b54b8308b67e11b84a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  point: {x: 0, y: 0, z: 0}
+  closeDistance: 1
+  speed: 2

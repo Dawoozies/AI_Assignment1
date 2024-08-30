@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.annulusgames.lit-motion": "https://github.com/AnnulusGames/LitMotion.git?path=src/LitMotion/Assets/LitMotion",
     "com.inspiaaa.unityhfsm": "https://github.com/Inspiaaa/UnityHFSM.git#upm",
     "com.unity.ai.navigation": "1.1.5",
     "com.unity.collab-proxy": "2.4.4",
