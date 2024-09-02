@@ -99,4 +99,7 @@ MonoBehaviour:
   id: 1
   normalID: 1
   usedID: 4
-  regenTime: 1
+  regenTime: 60
+  meshRenderer: {fileID: 0}
+  canBeUsed: {fileID: 2100000, guid: 3593cddab56503342b44b719b477cc39, type: 2}
+  depleted: {fileID: 2100000, guid: 3e000c4417f55b544b9c124c734cd6f1, type: 2}

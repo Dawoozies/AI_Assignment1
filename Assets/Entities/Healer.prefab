@@ -144,8 +144,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7fa5a40e6a9a14cb82c1f43237798d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entityType: 0
+  maxHealth: 10
+  health: 10
+  respawnTime: 10
   state: 6
   collectableID: 5
+  collectable: {fileID: 0}
+  meshRenderer: {fileID: 0}
+  aliveMaterial: {fileID: 2100000, guid: 1eb45c860bbdb4a4b9b516c326de31a6, type: 2}
+  deadMaterial: {fileID: 2100000, guid: 4a3e0d22605f3ca419400ad59a4e37e5, type: 2}
+  pickupDistance: 3
 --- !u!114 &7450431051457063082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +184,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
+  speed: 5
+  defaultSpeed: 5
   stepRadius: 25
   speedBounds: {x: 5, y: 10}
   waitTimeBounds: {x: 1, y: 2}
@@ -191,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
+  speed: 8
+  defaultSpeed: 8
   point: {x: 0, y: 0, z: 0}
   closeDistance: 1
-  speed: 2

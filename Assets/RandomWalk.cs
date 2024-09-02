@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,7 +9,7 @@ public class RandomWalk : Navigator
     float _waitTime;
     public override void Navigate()
     {
-        if(_waitTime <= 0f)
+        if (_waitTime <= 0f)
         {
             Vector3 p = transform.position + Random.onUnitSphere * stepRadius;
             NavMeshHit hit;
@@ -27,7 +25,7 @@ public class RandomWalk : Navigator
     public override void Update()
     {
         base.Update();
-        if(_waitTime > 0f)
+        if (_waitTime > 0f)
         {
             _waitTime -= Time.deltaTime;
         }

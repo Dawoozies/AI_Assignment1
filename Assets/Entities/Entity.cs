@@ -1,23 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityHFSM;
 public abstract class Entity : MonoBehaviour
 {
     protected NavigationSystem navigationSystem;
     protected StateMachine<State> entityStateMachine;
+    public EntityType entityType;
+    public int maxHealth;
+    public int health;
+    public float respawnTime;
+    protected float _respawnTime;
     public State state;
     public ObjectLookUp.ObjectID collectableID;
     public WorldObject collectable;
+    public MeshRenderer meshRenderer;
+    public Material aliveMaterial, deadMaterial;
+    public float pickupDistance;
+    protected Action<ObjectLookUp.ObjectID> onCollectablePickup;
     protected virtual void Start()
     {
         navigationSystem = GetComponent<NavigationSystem>();
+        meshRenderer = GetComponent<MeshRenderer>();
         entityStateMachine = new StateMachine<State>();
 
         entityStateMachine.AddState(State.Null);
         entityStateMachine.AddState(State.FindCollectable,
-            onLogic: state => {
+            onLogic: state =>
+            {
                 if (ObjectLookUp.ins.TryGetClosestObjectWithID(transform.position, collectableID, out collectable))
                 {
                     entityStateMachine.RequestStateChange(State.MoveToCollectable);
@@ -25,15 +34,65 @@ public abstract class Entity : MonoBehaviour
             });
         entityStateMachine.AddState(State.MoveToCollectable,
             onEnter: state => { navigationSystem.ChangeActiveNavigator(1); },
-            onLogic: state => {
+            onLogic: state =>
+            {
                 navigationSystem.ChangePoint(collectable.transform.position);
+                if (Vector3.Distance(transform.position, collectable.transform.position) < pickupDistance)
+                {
+                    if (collectable.TryInteract())
+                    {
+                        onCollectablePickup?.Invoke(collectable.id);
+                    }
+                }
             });
+
+        entityStateMachine.AddState(State.Dead, OnEnterDeath, OnLogicDeath, OnExitDeath);
+
         entityStateMachine.Init();
+
+        entityStateMachine.StateChanged += (state) => { this.state = state.name; };
+
         entityStateMachine.RequestStateChange(State.FindCollectable);
+
+        ObjectLookUp.ins.AddEntity(this);
     }
     protected virtual void Update()
     {
         entityStateMachine.OnLogic();
+    }
+    public virtual bool Damage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            health = 0;
+            entityStateMachine.RequestStateChange(State.Dead);
+            return true;
+        }
+        return false;
+    }
+    protected virtual void OnEnterDeath(State<State, string> state)
+    {
+        navigationSystem.Disable(true);
+        meshRenderer.material = deadMaterial;
+        _respawnTime = 0f;
+    }
+    protected virtual void OnLogicDeath(State<State, string> state)
+    {
+        if (_respawnTime < respawnTime)
+        {
+            _respawnTime += Time.deltaTime;
+        }
+        else
+        {
+            entityStateMachine.RequestStateChange(State.FindCollectable);
+        }
+    }
+    protected virtual void OnExitDeath(State<State, string> state)
+    {
+        navigationSystem.Disable(false);
+        meshRenderer.material = aliveMaterial;
+        health = maxHealth;
     }
 }
 public enum State
@@ -45,5 +104,12 @@ public enum State
     FindTarget,
     MoveToTarget,
     FindCollectable,
-    MoveToCollectable
+    MoveToCollectable,
+    Dead,
+}
+public enum EntityType
+{
+    Healer,
+    Vampire,
+    Hunter
 }

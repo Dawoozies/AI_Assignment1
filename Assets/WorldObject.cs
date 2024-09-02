@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldObject : MonoBehaviour
@@ -14,16 +12,21 @@ public class WorldObject : MonoBehaviour
     private void Start()
     {
         ObjectLookUp.ins.AddObject(this);
+        meshRenderer = GetComponent<MeshRenderer>();
+        _regenTime = regenTime;
     }
     private void Update()
     {
         if (_regenTime < regenTime)
         {
             _regenTime += Time.deltaTime;
+            meshRenderer.material = depleted;
         }
         else
         {
             ObjectLookUp.ins.ChangeState(this, normalID);
+            id = normalID;
+            meshRenderer.material = canBeUsed;
         }
     }
     public bool TryInteract()
@@ -31,9 +34,10 @@ public class WorldObject : MonoBehaviour
         if (_regenTime >= regenTime)
         {
             _regenTime = 0f;
-            if(usedID != ObjectLookUp.ObjectID.Town)
+            if (usedID != ObjectLookUp.ObjectID.Town)
             {
                 ObjectLookUp.ins.ChangeState(this, usedID);
+                id = usedID;
             }
             return true;
         }

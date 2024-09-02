@@ -121,9 +121,9 @@ NavMeshAgent:
   m_AgentTypeID: -334000983
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 240
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -144,8 +144,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dda170d7dd9a34141900f2fd16952a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entityType: 2
+  maxHealth: 15
+  health: 15
+  respawnTime: 2
   state: 6
   collectableID: 1
+  collectable: {fileID: 0}
+  meshRenderer: {fileID: 0}
+  aliveMaterial: {fileID: 2100000, guid: 40dd96fb941d8ef43a0400a7234922cf, type: 2}
+  deadMaterial: {fileID: 2100000, guid: 603f5e14cd5851d49b5f58a27c5de0a2, type: 2}
+  pickupDistance: 3
+  targetType: 1
+  target: {fileID: 0}
+  ammo: 5
+  attackDistance: 3
+  attackTime: 0.5
+  healthFleeThreshold: 4
 --- !u!114 &4517855024462381019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +190,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
+  speed: 5
+  defaultSpeed: 5
   stepRadius: 25
   speedBounds: {x: 5, y: 10}
   waitTimeBounds: {x: 1, y: 2}
@@ -191,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
+  speed: 11
+  defaultSpeed: 11
   point: {x: 0, y: 0, z: 0}
   closeDistance: 1
-  speed: 3

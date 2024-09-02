@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using LitMotion;
+using UnityEngine;
 public class DoorMoving : MonoBehaviour
 {
     public Vector3 start;
@@ -16,7 +14,7 @@ public class DoorMoving : MonoBehaviour
     }
     void Update()
     {
-        if(_time < time)
+        if (_time < time)
         {
             _time += Time.deltaTime;
         }
@@ -30,7 +28,7 @@ public class DoorMoving : MonoBehaviour
     {
         Vector3 a;
         Vector3 b;
-        if(dir)
+        if (dir)
         {
             a = start;
             b = end;

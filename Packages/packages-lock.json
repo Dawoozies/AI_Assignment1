@@ -11,6 +11,13 @@
       },
       "hash": "b6002a25d18b889216d886ee787fe1878e66be00"
     },
+    "com.annulusgames.u-pools": {
+      "version": "https://github.com/AnnulusGames/uPools.git?path=/Assets/uPools",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e11ce9c12c65c12f3bc35ae2ef7cacde6826e503"
+    },
     "com.inspiaaa.unityhfsm": {
       "version": "https://github.com/Inspiaaa/UnityHFSM.git#upm",
       "depth": 0,
