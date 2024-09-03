@@ -2,6 +2,7 @@ using UnityHFSM;
 using UnityEngine;
 public class Healer : Entity
 {
+    WorldObject town;
     protected override void Start()
     {
         base.Start();
@@ -14,14 +15,6 @@ public class Healer : Entity
             },
             onLogic: state =>
             {
-                if (_respawnTime < respawnTime)
-                {
-                    _respawnTime += Time.deltaTime;
-                }
-                else
-                {
-                    entityStateMachine.RequestStateChange(State.FindCollectable);
-                }
             },
             onExit: state =>
             {
@@ -30,5 +23,35 @@ public class Healer : Entity
                 health = maxHealth;
             }
             );
+        entityStateMachine.AddState(State.MoveToSafeArea,
+            onEnter: state => {
+                navigationSystem.ChangeActiveNavigator(1);
+                safetyValue = 0f;
+            },
+            onLogic: state => { 
+                if(ObjectLookUp.ins.TryGetClosestObjectWithID(transform.position, ObjectLookUp.ObjectID.Town, out town))
+                {
+                    navigationSystem.ChangePoint(town.transform.position);
+                    if(Vector3.Distance(transform.position, town.transform.position) < pickupDistance)
+                    {
+                        safetyValue += Time.deltaTime;
+                        if(safetyValue > 1f)
+                        {
+                            entityStateMachine.RequestStateChange(State.MoveToCollectable);
+                            safetyValue = 0f;
+                        }
+                    }
+                }
+            }
+            );
+    }
+    public override bool Damage(int damage)
+    {
+        if(!base.Damage(damage))
+        {
+            entityStateMachine.RequestStateChange(State.MoveToSafeArea);
+            return false;
+        }
+        return true;
     }
 }

@@ -15,15 +15,28 @@ public class Vampire : Entity
         entityStateMachine.AddState(State.FindTarget,
             onLogic: state =>
             {
-                if (ObjectLookUp.ins.TryGetClosestEntityOfType(transform.position, targetType, out target))
+                if (ObjectLookUp.ins.TryGetClosestEntityOfType(transform.position, EntityType.Healer, out target))
                 {
                     entityStateMachine.RequestStateChange(State.MoveToTarget);
+                }
+                else
+                {
+                    if(ObjectLookUp.ins.TryGetClosestEntityOfType(transform.position, EntityType.Hunter, out target))
+                    {
+                        entityStateMachine.RequestStateChange(State.MoveToTarget);
+                    }
                 }
             });
         entityStateMachine.AddState(State.MoveToTarget,
             onEnter: state => { navigationSystem.ChangeActiveNavigator(1); },
             onLogic: state =>
             {
+                if(target.safetyValue > 0f)
+                {
+                    target = null;
+                    entityStateMachine.RequestStateChange(State.FindTarget);
+                    return;
+                }
                 navigationSystem.ChangePoint(target.transform.position);
                 if (_attackTime < attackTime)
                 {

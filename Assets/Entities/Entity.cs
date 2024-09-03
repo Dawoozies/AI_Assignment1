@@ -17,6 +17,7 @@ public abstract class Entity : MonoBehaviour
     public Material aliveMaterial, deadMaterial;
     public float pickupDistance;
     protected Action<ObjectLookUp.ObjectID> onCollectablePickup;
+    public float safetyValue;
     protected virtual void Start()
     {
         navigationSystem = GetComponent<NavigationSystem>();
@@ -24,6 +25,13 @@ public abstract class Entity : MonoBehaviour
         entityStateMachine = new StateMachine<State>();
 
         entityStateMachine.AddState(State.Null);
+        entityStateMachine.AddState(State.RandomWalk, onEnter: state => { navigationSystem.ChangeActiveNavigator(0); }, 
+            onLogic: state => { 
+                if(ObjectLookUp.ins.TryGetClosestObjectWithID(transform.position, collectableID, out collectable))
+                {
+                    entityStateMachine.RequestStateChange(State.MoveToCollectable);
+                }
+            });
         entityStateMachine.AddState(State.FindCollectable,
             onLogic: state =>
             {
@@ -36,13 +44,21 @@ public abstract class Entity : MonoBehaviour
             onEnter: state => { navigationSystem.ChangeActiveNavigator(1); },
             onLogic: state =>
             {
-                navigationSystem.ChangePoint(collectable.transform.position);
-                if (Vector3.Distance(transform.position, collectable.transform.position) < pickupDistance)
+                if(ObjectLookUp.ins.TryGetClosestObjectWithID(transform.position, collectableID, out collectable))
                 {
-                    if (collectable.TryInteract())
+                    navigationSystem.ChangePoint(collectable.transform.position);
+                    if (Vector3.Distance(transform.position, collectable.transform.position) < pickupDistance)
                     {
-                        onCollectablePickup?.Invoke(collectable.id);
+                        ObjectLookUp.ObjectID oldObjectID = collectable.id;
+                        if (collectable.TryInteract())
+                        {
+                            onCollectablePickup?.Invoke(oldObjectID);
+                        }
                     }
+                }
+                else
+                {
+                    entityStateMachine.RequestStateChange(State.RandomWalk);
                 }
             });
 

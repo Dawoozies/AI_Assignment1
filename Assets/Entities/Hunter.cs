@@ -44,11 +44,33 @@ public class Hunter : Entity
             }
             );
         entityStateMachine.AddTransition(State.MoveToCollectable, State.FindTarget, state => ammo > 0 && health > healthFleeThreshold);
-        entityStateMachine.AddTransition(State.FindTarget, State.FindCollectable, state => ammo <= 0);
-        entityStateMachine.AddTransition(State.MoveToTarget, State.FindCollectable, state => ammo <= 0);
+        entityStateMachine.AddTransition(State.FindTarget, State.FindCollectable, state => ammo <= 0 || health <= healthFleeThreshold);
+        entityStateMachine.AddTransition(State.MoveToTarget, State.FindCollectable, state => ammo <= 0 || health <= healthFleeThreshold);
         onCollectablePickup = (ObjectLookUp.ObjectID pickedUpId) => { 
-            ammo = 5;
+            if(pickedUpId == ObjectLookUp.ObjectID.HealthPack)
+            {
+                health = maxHealth;
+            }
+            if(pickedUpId == ObjectLookUp.ObjectID.Ammo)
+            {
+                ammo = 5;
+            }
             collectable = null;
         };
+    }
+    protected override void Update()
+    {
+        if(health <= healthFleeThreshold)
+        {
+            collectableID = ObjectLookUp.ObjectID.HealthPack;
+        }
+        else
+        {
+            collectableID = ObjectLookUp.ObjectID.Ammo;
+        }
+        base.Update();
+    }
+    protected override void OnLogicDeath(State<State, string> state)
+    {
     }
 }

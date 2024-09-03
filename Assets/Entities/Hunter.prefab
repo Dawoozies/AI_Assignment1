@@ -121,7 +121,7 @@ NavMeshAgent:
   m_AgentTypeID: -334000983
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 20
+  m_Acceleration: 30
   avoidancePriority: 50
   m_AngularSpeed: 240
   m_StoppingDistance: 0
@@ -145,8 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityType: 2
-  maxHealth: 15
-  health: 15
+  maxHealth: 6
+  health: 6
   respawnTime: 2
   state: 6
   collectableID: 1
@@ -155,6 +155,7 @@ MonoBehaviour:
   aliveMaterial: {fileID: 2100000, guid: 40dd96fb941d8ef43a0400a7234922cf, type: 2}
   deadMaterial: {fileID: 2100000, guid: 603f5e14cd5851d49b5f58a27c5de0a2, type: 2}
   pickupDistance: 3
+  safetyValue: 0
   targetType: 1
   target: {fileID: 0}
   ammo: 5
@@ -208,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  speed: 11
-  defaultSpeed: 11
+  speed: 22
+  defaultSpeed: 22
   point: {x: 0, y: 0, z: 0}
   closeDistance: 1

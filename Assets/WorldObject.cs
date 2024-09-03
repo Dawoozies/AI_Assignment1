@@ -25,19 +25,22 @@ public class WorldObject : MonoBehaviour
         else
         {
             ObjectLookUp.ins.ChangeState(this, normalID);
-            id = normalID;
             meshRenderer.material = canBeUsed;
         }
     }
     public bool TryInteract()
     {
+        if(id == ObjectLookUp.ObjectID.HealthPackDepleted)
+        {
+            _regenTime = regenTime;
+            return true;
+        }
         if (_regenTime >= regenTime)
         {
             _regenTime = 0f;
             if (usedID != ObjectLookUp.ObjectID.Town)
             {
                 ObjectLookUp.ins.ChangeState(this, usedID);
-                id = usedID;
             }
             return true;
         }

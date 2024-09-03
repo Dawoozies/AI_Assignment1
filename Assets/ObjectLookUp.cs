@@ -69,13 +69,19 @@ public class ObjectLookUp : MonoBehaviour
         if (!Objects.ContainsKey(newID))
         {
             Objects.Add(newID, new List<WorldObject> { worldObject });
+
+            if (Objects[worldObject.id].Contains(worldObject))
+                Objects[worldObject.id].Remove(worldObject);
+
+            worldObject.id = newID;
             return;
         }
 
         if (Objects[worldObject.id].Contains(worldObject))
             Objects[worldObject.id].Remove(worldObject);
+
         Objects[newID].Add(worldObject);
-        //worldObject.id = newID;
+        worldObject.id = newID;
     }
     //Entity look up
     public Dictionary<EntityType, List<Entity>> Entities = new();
