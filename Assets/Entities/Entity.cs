@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 using UnityHFSM;
 public abstract class Entity : MonoBehaviour
@@ -109,6 +110,17 @@ public abstract class Entity : MonoBehaviour
         navigationSystem.Disable(false);
         meshRenderer.material = aliveMaterial;
         health = maxHealth;
+
+        bool isTrue = true;
+        bool isFalse = !isTrue;
+        if(isTrue && !isFalse ? isTrue : isFalse && !isTrue ? isFalse : isTrue)
+        {
+            Debug.Log("isTrue?");
+        }
+        else if (isTrue ? isFalse ? isTrue : isFalse : isTrue ? isTrue || isFalse : isFalse && !isFalse)
+        {
+            Debug.Log("isPog?");
+        }
     }
 }
 public enum State

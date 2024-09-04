@@ -145,8 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityType: 2
-  maxHealth: 6
-  health: 6
+  maxHealth: 8
+  health: 8
   respawnTime: 2
   state: 6
   collectableID: 1
@@ -158,9 +158,9 @@ MonoBehaviour:
   safetyValue: 0
   targetType: 1
   target: {fileID: 0}
-  ammo: 5
+  ammo: 10
   attackDistance: 3
-  attackTime: 0.5
+  attackTime: 0.2
   healthFleeThreshold: 4
 --- !u!114 &4517855024462381019
 MonoBehaviour:
